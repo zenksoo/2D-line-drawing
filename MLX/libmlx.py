@@ -328,3 +328,12 @@ mlx.mlx_is_key_down.restype = c_bool
 # Hooks
 mlx.mlx_loop_hook.argtypes = [ctypes.POINTER(mlx_t), mlx_loop_hook_func, c_void_p]
 mlx.mlx_loop_hook.restype = c_bool
+
+# I ADD MISSING WRAPPERS FOR NEEDED METHODS FOR MOUSE POSITION AND EVENTS
+#mouse
+
+mlx.mlx_mouse_hook.argtypes = [ctypes.POINTER(mlx_t), mlx_mousefunc, c_void_p]
+mlx.mlx_mouse_hook.restype  = None
+
+mlx.mlx_get_mouse_pos.argtypes = [ctypes.POINTER(mlx_t), ctypes.POINTER(c_uint32), ctypes.POINTER(c_uint32)]
+mlx.mlx_get_mouse_pos.restype = None

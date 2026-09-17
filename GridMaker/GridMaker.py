@@ -1,6 +1,6 @@
 from MLX.libmlx import *
 from MLXCanvas import MlxCanvas
-
+from GridConfig import GridConfig
 
 class GridMaker:
     def __new__(cls, *args, **kwargs) -> Self:
@@ -47,23 +47,27 @@ class GridMaker:
             y_label += 1
 
     @staticmethod
-    def _create_graph_grid(grid_layer, text_layer, x0, y0, x1, y1, pixel_color, grid_size) -> None:
+    def _create_graph_grid(grid_layer, text_layer, x0, y0, x1, y1, grid_config: GridConfig) -> None:
         # randomize grid area
-        start_y = y0 + grid_size
-        end_y = y1 - grid_size
-        start_x = x0 + grid_size
-        end_x = x1 - grid_size
+        start_y = y0 + grid_config.grid_size
+        end_y = y1 - grid_config.grid_size
+        start_x = x0 + grid_config.grid_size
+        end_x = x1 - grid_config.grid_size
+        # start_y = y0
+        # end_y = y1
+        # start_x = x0
+        # end_x = x1
 
         GridMaker._draw_axis(grid_layer, start_x, start_y, end_x, end_y, 3)
-        GridMaker._draw_labels(text_layer, start_x, start_y, end_x, end_y, 3, grid_size)
+        GridMaker._draw_labels(text_layer, start_x, start_y, end_x, end_y, 3, grid_config.grid_size)
 
-        for y in range(start_y, end_y + 1, grid_size):
+        for y in range(start_y, end_y + 1, grid_config.grid_size):
             for x in range(start_x, end_x):
-                MlxCanvas._fill_pixel(grid_layer, x, y, pixel_color)
-            y += grid_size
+                MlxCanvas._fill_pixel(grid_layer, x, y, grid_config.color)
+            y += grid_config.grid_size
 
-        for x in range(start_x, end_x + 1, grid_size):
+        for x in range(start_x, end_x + 1, grid_config.grid_size):
             for y in range(start_y, end_y):
-                MlxCanvas._fill_pixel(grid_layer, x, y, pixel_color)
-            x += grid_size
+                MlxCanvas._fill_pixel(grid_layer, x, y, grid_config.color)
+            x += grid_config.grid_size
 

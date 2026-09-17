@@ -19,7 +19,7 @@ class MlxCanvas:
         for y in range(img.contents.height):
             for x in range(img.contents.width):
                 MlxCanvas._fill_pixel(img, x, y, pixel_color)
-        
+
 
     @staticmethod
     def _draw_text(layer: mlx_image_t,
@@ -73,4 +73,37 @@ class MlxCanvas:
             "end": (txt_x + (len(txt) * 6), txt_y + 8)
         }
 
-    pass
+
+    @staticmethod
+    def _draw_circle(layer: mlx_image_t, cx: int, cy: int, r: int) -> None:
+        MlxCanvas._fill_pixel(layer, cx, cy, 0xff0000ff)
+        x = 0
+        y = -r
+
+        while (x < -y):
+            midp = y + 0.5
+            c = midp*midp + x*x
+
+            if c > r*r:
+                y += 1
+
+            MlxCanvas._fill_pixel(layer, cx + x, cy + y, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx + x, cy - y, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx - x, cy + y, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx - x, cy - y, 0x000000ff)
+
+            MlxCanvas._fill_pixel(layer, cx + y, cy + x, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx - y, cy - x, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx - y, cy + x, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx + y, cy - x, 0x000000ff)
+
+
+            for i in range(cx - x, cx + x + 1):
+                MlxCanvas._fill_pixel(layer, i, cy + y, 0xff0000ff)
+                MlxCanvas._fill_pixel(layer, i, cy - y, 0xff0000ff)
+
+            for i in range(cx - y, cx + y + 1):
+                MlxCanvas._fill_pixel(layer, i, cy + x, 0xff0000ff)
+                MlxCanvas._fill_pixel(layer, i, cy - x, 0x00ff00ff)
+
+            x += 1

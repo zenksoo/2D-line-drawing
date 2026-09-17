@@ -1,4 +1,5 @@
 [grid]
-width = 750
-height = 450
-grid_size = 50
+width      = 750
+height     = 450
+grid_size  = 50
+color      = 0x000000FF
