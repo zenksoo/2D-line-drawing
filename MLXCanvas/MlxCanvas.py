@@ -1,0 +1,76 @@
+from MLX.libmlx import *
+from typing import Dict, Tuple
+from PIL import Image
+from Utils import pack_rgba
+
+class MlxCanvas:
+    @staticmethod
+    def _fill_pixel(img: mlx_image_t,
+                x: int, y: int,
+                pixel_color: int) -> None:
+        idx = (y * img.contents.width + x) * 4
+        img.contents.pixels[idx] = pixel_color >> 24 & 0xFF
+        img.contents.pixels[idx + 1] = pixel_color >> 16 & 0xFF
+        img.contents.pixels[idx + 2] = pixel_color >> 8 & 0xFF
+        img.contents.pixels[idx + 3] = pixel_color & 0xFF
+
+    @staticmethod
+    def _fill_mlximg_by_color(img: mlx_image_t, pixel_color: int) -> None:
+        for y in range(img.contents.height):
+            for x in range(img.contents.width):
+                MlxCanvas._fill_pixel(img, x, y, pixel_color)
+        
+
+    @staticmethod
+    def _draw_text(layer: mlx_image_t,
+                txt: str, txt_x: int, txt_y: int,
+                color: int | None = None
+                ) -> Dict[str, Tuple[int, int]]:
+
+        def draw_char(img: mlx_image_t,
+                        char: str, char_idx: int,
+                        layer_x: int, layer_y: int,
+                        replacement_color: int | None) -> None:
+            LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+            UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            DIGITS = "1234567890!\"#%'()~+-/[]<>:.,_| "
+
+            png: Image.Image
+            glyph_x: int = 0
+            if char in LOWERCASE:
+                png = Image.open("./Assets/fonts/lowercase.png")
+                glyph_x = LOWERCASE.index(char)
+            elif char in UPPERCASE:
+                png = Image.open("./Assets/fonts/uppercase.png")
+                glyph_x = UPPERCASE.index(char)
+            elif char in DIGITS:
+                png = Image.open("./Assets/fonts/digits.png")
+                glyph_x = DIGITS.index(char)
+            else:
+                char = '.'
+                png = Image.open("./Assets/fonts/digits.png")
+                glyph_x = DIGITS.index(char)
+
+            glyph_x = glyph_x * 6
+            img_x = char_idx * 6
+
+            for y in range(8):
+                for x in range(6):
+                    pixel_color = pack_rgba(*png.getpixel((glyph_x + x, y)))
+                    if (replacement_color and
+                        pixel_color == (0xffffff << 8) + 0xff):
+
+                        pixel_color = replacement_color
+
+                    MlxCanvas._fill_pixel(img, img_x + x + layer_x,
+                                        y + layer_y, pixel_color)
+
+        for idx, char in enumerate(txt):
+            draw_char(layer, char, idx, txt_x, txt_y, color)
+
+        return {
+            "start": (txt_x, txt_y),
+            "end": (txt_x + (len(txt) * 6), txt_y + 8)
+        }
+
+    pass
