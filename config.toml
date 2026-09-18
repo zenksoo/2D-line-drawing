@@ -2,4 +2,9 @@
 width      = 750
 height     = 450
 grid_size  = 50
-color      = 0x9F9F9FFF
+grid_color = 0x9F9F9FFF
+bg_color   = 0xffffffff
+text_color = 0x000000ff
+axis_color = 0x000000ff
+padding_x  = 50
+padding_y  = 100

@@ -16,13 +16,23 @@ class MlxCanvas:
         img.contents.pixels[idx + 3] = pixel_color & 0xFF
 
     @staticmethod
+    def _mlx_new_layer(mlx_ptr: mlx_t) -> mlx_image_t:
+        w, h = (mlx_ptr.contents.width, mlx_ptr.contents.height)
+
+        layer: mlx_image_t = mlx.mlx_new_image(mlx_ptr, w, h)
+
+        mlx.mlx_image_to_window(mlx_ptr, layer, 0, 0)
+
+        return layer
+
+    @staticmethod
     def _fill_mlximg_by_color(img: mlx_image_t, pixel_color: int) -> None:
         for y in range(img.contents.height):
             for x in range(img.contents.width):
                 MlxCanvas._fill_pixel(img, x, y, pixel_color)
 
     @staticmethod
-    def _erase_mlximg(img: mlx_image_t) -> None:
+    def _erase_mlximg(mlx_ptr: mlx_t, img: mlx_image_t) -> None:
         for y in range(img.contents.height):
             for x in range(img.contents.width):
                 MlxCanvas._fill_pixel(img, x, y, 0x00000000)
@@ -92,15 +102,15 @@ class MlxCanvas:
             if c > r*r:
                 y += 1
 
-            MlxCanvas._fill_pixel(layer, cx + x, cy + y, pixel_color)
-            MlxCanvas._fill_pixel(layer, cx + x, cy - y, pixel_color)
-            MlxCanvas._fill_pixel(layer, cx - x, cy + y, pixel_color)
-            MlxCanvas._fill_pixel(layer, cx - x, cy - y, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx + x, cy + y, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx + x, cy - y, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx - x, cy + y, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx - x, cy - y, 0x000000ff)
 
-            MlxCanvas._fill_pixel(layer, cx + y, cy + x, pixel_color)
-            MlxCanvas._fill_pixel(layer, cx - y, cy - x, pixel_color)
-            MlxCanvas._fill_pixel(layer, cx - y, cy + x, pixel_color)
-            MlxCanvas._fill_pixel(layer, cx + y, cy - x, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx + y, cy + x, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx - y, cy - x, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx - y, cy + x, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx + y, cy - x, 0x000000ff)
 
 
             for i in range(cx - x, cx + x + 1):

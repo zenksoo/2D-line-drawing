@@ -13,12 +13,10 @@ class LineDrawing:
     def drawLine(layer: mlx_image_t,
                  x0: int, y0: int, x1: int, y1: int,
                  width: int, pixel_color: int) -> None:
-
         dx = x1 - x0
         dy = y1 - y0
 
         step = max(dx, dy)
-        print("step is : ", step)
 
         half = width // 2
 
@@ -26,12 +24,11 @@ class LineDrawing:
         nx = -dy / length
         ny = dx / length
 
+        # (nx, ny) is the unit of 90deg of the line D
 
         if (step):
             stepx = dx / step
             stepy = dy / step
-            print("stepx: ", stepx)
-            print("stepy: ", stepy)
             for i in range(step + 1):
                 px = math.ceil(x0 + i * stepx)
                 py = math.ceil(y0 + i * stepy)

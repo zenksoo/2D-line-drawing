@@ -1,12 +1,16 @@
 import tomllib
+from pydantic import BaseModel
 
-class GridConfig:
-    def __init__(self, width: int, height: int,
-                 grid_size: int, color: int) -> None:
-        self.w: int = width
-        self.h: int = height
-        self.grid_size: int = grid_size
-        self.color: int = color
+class GridConfig(BaseModel):
+    w: int = 600
+    h: int = 420
+    grid_size: int = 50
+    axis_color: int = 0x000000ff
+    grid_color: int = 0x000000ff
+    bg_color: int = 0xffffffff
+    text_color: int = 0x000000ff
+    x_pad: int = 50
+    y_pad: int = 50
 
     @staticmethod
     def _from_file(file: str) -> "GridConfig":
