@@ -8,6 +8,7 @@ class MlxCanvas:
     def _fill_pixel(img: mlx_image_t,
                 x: int, y: int,
                 pixel_color: int) -> None:
+
         idx = (y * img.contents.width + x) * 4
         img.contents.pixels[idx] = pixel_color >> 24 & 0xFF
         img.contents.pixels[idx + 1] = pixel_color >> 16 & 0xFF
@@ -19,6 +20,12 @@ class MlxCanvas:
         for y in range(img.contents.height):
             for x in range(img.contents.width):
                 MlxCanvas._fill_pixel(img, x, y, pixel_color)
+
+    @staticmethod
+    def _erase_mlximg(img: mlx_image_t) -> None:
+        for y in range(img.contents.height):
+            for x in range(img.contents.width):
+                MlxCanvas._fill_pixel(img, x, y, 0x00000000)
 
 
     @staticmethod
@@ -73,10 +80,8 @@ class MlxCanvas:
             "end": (txt_x + (len(txt) * 6), txt_y + 8)
         }
 
-
     @staticmethod
-    def _draw_circle(layer: mlx_image_t, cx: int, cy: int, r: int) -> None:
-        MlxCanvas._fill_pixel(layer, cx, cy, 0xff0000ff)
+    def _draw_circle(layer: mlx_image_t, cx: int, cy: int, r: int, pixel_color: int) -> None:
         x = 0
         y = -r
 
@@ -87,23 +92,23 @@ class MlxCanvas:
             if c > r*r:
                 y += 1
 
-            MlxCanvas._fill_pixel(layer, cx + x, cy + y, 0x000000ff)
-            MlxCanvas._fill_pixel(layer, cx + x, cy - y, 0x000000ff)
-            MlxCanvas._fill_pixel(layer, cx - x, cy + y, 0x000000ff)
-            MlxCanvas._fill_pixel(layer, cx - x, cy - y, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx + x, cy + y, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx + x, cy - y, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx - x, cy + y, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx - x, cy - y, pixel_color)
 
-            MlxCanvas._fill_pixel(layer, cx + y, cy + x, 0x000000ff)
-            MlxCanvas._fill_pixel(layer, cx - y, cy - x, 0x000000ff)
-            MlxCanvas._fill_pixel(layer, cx - y, cy + x, 0x000000ff)
-            MlxCanvas._fill_pixel(layer, cx + y, cy - x, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx + y, cy + x, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx - y, cy - x, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx - y, cy + x, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx + y, cy - x, pixel_color)
 
 
             for i in range(cx - x, cx + x + 1):
-                MlxCanvas._fill_pixel(layer, i, cy + y, 0xff0000ff)
-                MlxCanvas._fill_pixel(layer, i, cy - y, 0xff0000ff)
+                MlxCanvas._fill_pixel(layer, i, cy + y, pixel_color)
+                MlxCanvas._fill_pixel(layer, i, cy - y, pixel_color)
 
-            for i in range(cx - y, cx + y + 1):
-                MlxCanvas._fill_pixel(layer, i, cy + x, 0xff0000ff)
-                MlxCanvas._fill_pixel(layer, i, cy - x, 0x00ff00ff)
+            for i in range(cx + y, cx - y):
+                MlxCanvas._fill_pixel(layer, i, cy + x, pixel_color)
+                MlxCanvas._fill_pixel(layer, i, cy - x, pixel_color)
 
             x += 1
