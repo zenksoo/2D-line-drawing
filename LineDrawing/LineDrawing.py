@@ -20,15 +20,26 @@ class LineDrawing:
 
         step = max(abs(sx), abs(sy))
 
+
         if (not step):
             return
 
         dx = sx / step
         dy = sy / step
+
+        half = width // 2
+        vx = -dy
+        vy = dx
+
+
+        print(vx, vy)
+
         x = x0
         y = y0
+        MlxCanvas._draw_circle(layer, round(x + (vx * 10)), round(y + (10 * vy)), 5, pixel_color)
         for i in range(step):
-            MlxCanvas._fill_pixel(layer, round(x), round(y), pixel_color)
+            for j in range(-half, half):
+                MlxCanvas._fill_pixel(layer, round(x + (vx * j)), round(y + (vy * j)), pixel_color)
             x += dx
             y += dy
 
