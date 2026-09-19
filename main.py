@@ -67,7 +67,7 @@ def mouse_event(button, x, y, param) -> None:
             return
         global DRAW_STATE
         if DRAW_STATE != DrawState.ERASE:
-            MlxCanvas._draw_circle(LAYERS.draw_layer, x.value, y.value, 5, 0x1E00FFFF)
+            MlxCanvas._draw_circle(LAYERS.draw_layer, x.value, y.value, 5, GRID_CONFIG.point_color)
             if (DRAW_STATE == DrawState.START_POINT):
                 START_POINT[0] = x.value
                 START_POINT[1] = y.value
@@ -76,11 +76,11 @@ def mouse_event(button, x, y, param) -> None:
                 END_POINT[0] = x.value
                 END_POINT[1] = y.value
                 DRAW_STATE = DrawState.LINE_DRAWING
-                # drawing line here
-                LineDrawing.drawLine(LAYERS.draw_layer,
-                                     START_POINT[0], START_POINT[1],
-                                     END_POINT[0], END_POINT[1], 5,
-                                     0xDE06C1FF)
+
+                LineDrawing._draw_line(LAYERS.draw_layer,
+                                                      START_POINT[0], START_POINT[1],
+                                                      END_POINT[0], END_POINT[1],
+                                                      10, GRID_CONFIG.line_color)
                 DRAW_STATE = DrawState.START_POINT
 
     elif (button == 1):

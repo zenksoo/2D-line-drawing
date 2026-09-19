@@ -113,15 +113,15 @@ class MlxCanvas:
             if c > r*r:
                 y += 1
 
-            MlxCanvas._fill_pixel(layer, cx + x, cy + y, 0x000000ff)
-            MlxCanvas._fill_pixel(layer, cx + x, cy - y, 0x000000ff)
-            MlxCanvas._fill_pixel(layer, cx - x, cy + y, 0x000000ff)
-            MlxCanvas._fill_pixel(layer, cx - x, cy - y, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx + x, cy + y, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx + x, cy - y, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx - x, cy + y, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx - x, cy - y, pixel_color)
 
-            MlxCanvas._fill_pixel(layer, cx + y, cy + x, 0x000000ff)
-            MlxCanvas._fill_pixel(layer, cx - y, cy - x, 0x000000ff)
-            MlxCanvas._fill_pixel(layer, cx - y, cy + x, 0x000000ff)
-            MlxCanvas._fill_pixel(layer, cx + y, cy - x, 0x000000ff)
+            MlxCanvas._fill_pixel(layer, cx + y, cy + x, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx - y, cy - x, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx - y, cy + x, pixel_color)
+            MlxCanvas._fill_pixel(layer, cx + y, cy - x, pixel_color)
 
 
             for i in range(cx - x, cx + x + 1):
