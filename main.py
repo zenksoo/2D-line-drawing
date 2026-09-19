@@ -77,8 +77,9 @@ def mouse_event(button, x, y, param) -> None:
                                      0xDE06C1FF)
                 DRAW_STATE = DrawState.START_POINT
 
-    # elif (button == 1):
-    #     MlxCanvas._erase_mlximg(mlx_ptr, LAYERS.draw_layer)
+    elif (button == 1):
+        DRAW_STATE = DrawState.START_POINT
+        LAYERS.draw_layer = MlxCanvas._erase_mlximg(mlx_ptr, LAYERS.draw_layer)
 
 def init_grid_window(grid_config: GridConfig) -> mlx_t:
 
@@ -86,7 +87,7 @@ def init_grid_window(grid_config: GridConfig) -> mlx_t:
     window_height = grid_config.h + (grid_config.y_pad * 2)
 
     mlx_ptr = mlx.mlx_init(window_width,
-                           window_height, b"Graph Grid", False)
+                           window_height, b"Graph Grid", True)
 
     LAYERS.text_layer = MlxCanvas._mlx_new_layer(mlx_ptr)
     LAYERS.grid_layer = MlxCanvas._mlx_new_layer(mlx_ptr)

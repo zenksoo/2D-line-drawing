@@ -32,11 +32,20 @@ class MlxCanvas:
                 MlxCanvas._fill_pixel(img, x, y, pixel_color)
 
     @staticmethod
-    def _erase_mlximg(mlx_ptr: mlx_t, img: mlx_image_t) -> None:
-        for y in range(img.contents.height):
-            for x in range(img.contents.width):
-                MlxCanvas._fill_pixel(img, x, y, 0x00000000)
+    def _erase_mlximg(mlx_ptr: mlx_t, img: mlx_image_t) -> mlx_image_t:
+        w, h = (img.contents.width, img.contents.height)
+        x, y = (
+            img.contents.instances[0].x,
+            img.contents.instances[0].y
+        )
 
+
+        mlx.mlx_delete_image(mlx_ptr, img)
+
+        img = mlx.mlx_new_image(mlx_ptr, w, h)
+        mlx.mlx_image_to_window(mlx_ptr, img, x, y)
+
+        return img
 
     @staticmethod
     def _draw_text(layer: mlx_image_t,

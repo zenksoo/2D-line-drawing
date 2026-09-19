@@ -55,6 +55,8 @@ class GridMaker:
                            grid_config: GridConfig) -> None:
         print(text_layer.contents.width, text_layer.contents.height)
         # randomize grid area
+        print(grid_config.y_pad)
+        print(grid_config.x_pad)
         start_y = grid_config.y_pad
         end_y =  grid_config.y_pad + grid_config.h
         start_x = grid_config.x_pad

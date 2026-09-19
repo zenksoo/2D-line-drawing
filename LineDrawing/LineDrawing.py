@@ -13,27 +13,24 @@ class LineDrawing:
     def drawLine(layer: mlx_image_t,
                  x0: int, y0: int, x1: int, y1: int,
                  width: int, pixel_color: int) -> None:
-        dx = x1 - x0
-        dy = y1 - y0
 
-        step = max(dx, dy)
 
-        half = width // 2
+        sx = x1 - x0
+        sy = y1 - y0
 
-        length = math.sqrt(dx*dx + dy*dy)
-        nx = -dy / length
-        ny = dx / length
+        step = max(abs(sx), abs(sy))
 
-        # (nx, ny) is the unit of 90deg of the line D
+        if (not step):
+            return
 
-        if (step):
-            stepx = dx / step
-            stepy = dy / step
-            for i in range(step + 1):
-                px = math.ceil(x0 + i * stepx)
-                py = math.ceil(y0 + i * stepy)
-                for j in range(-half, half + 1):
-                    ox = round(px + j * nx)
-                    oy = round(py + j * ny)
+        dx = sx / step
+        dy = sy / step
+        x = x0
+        y = y0
+        for i in range(step):
+            MlxCanvas._fill_pixel(layer, round(x), round(y), pixel_color)
+            x += dx
+            y += dy
 
-                    MlxCanvas._fill_pixel(layer, ox, oy, pixel_color)
+
+

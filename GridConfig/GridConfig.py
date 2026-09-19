@@ -17,6 +17,7 @@ class GridConfig(BaseModel):
         with open(file, 'rb') as f:
             config = tomllib.load(f)
 
+
         return GridConfig(**config["grid"])
 
 
