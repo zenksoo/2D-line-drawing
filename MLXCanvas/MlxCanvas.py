@@ -106,6 +106,10 @@ class MlxCanvas:
         x = 0
         y = -r
 
+        if not r:
+            MlxCanvas._fill_pixel(layer,cx, cy, pixel_color)
+            return
+
         while (x < -y):
             midp = y + 0.5
             c = midp*midp + x*x

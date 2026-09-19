@@ -1,7 +1,7 @@
 [grid]
 width      = 750
 height     = 450
-grid_size  = 50
+grid_size  = 25
 grid_color = 0x9F9F9FFF
 bg_color   = 0xffffffff
 text_color = 0x000000ff

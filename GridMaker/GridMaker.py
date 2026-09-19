@@ -61,11 +61,13 @@ class GridMaker:
         GridMaker._draw_axis(grid_layer,
                              start_x, start_y,
                              end_x, end_y, 3, grid_config.axis_color)
-        GridMaker._draw_labels(text_layer,
-                               start_x, start_y,
-                               end_x, end_y, 3,
-                               grid_config.grid_size,
-                               grid_config.text_color)
+
+        if grid_config.grid_size >= 15:
+            GridMaker._draw_labels(text_layer,
+                                start_x, start_y,
+                                end_x, end_y, 3,
+                                grid_config.grid_size,
+                                grid_config.text_color)
 
         for y in range(start_y, end_y + 1, grid_config.grid_size):
             for x in range(start_x, end_x):
