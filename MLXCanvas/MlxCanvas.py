@@ -34,16 +34,18 @@ class MlxCanvas:
     @staticmethod
     def _erase_mlximg(mlx_ptr: mlx_t, img: mlx_image_t) -> mlx_image_t:
         w, h = (img.contents.width, img.contents.height)
-        x, y = (
+        x, y, z = (
             img.contents.instances[0].x,
-            img.contents.instances[0].y
+            img.contents.instances[0].y,
+            img.contents.instances[0].z
         )
-
 
         mlx.mlx_delete_image(mlx_ptr, img)
 
         img = mlx.mlx_new_image(mlx_ptr, w, h)
         mlx.mlx_image_to_window(mlx_ptr, img, x, y)
+
+        img.contents.instances[0].z = z
 
         return img
 

@@ -33,7 +33,6 @@ class GridMaker:
 
         x_label: int = 0
         y_label: int = 0
-        print("display labels :)")
 
         for x in range(x0 - line_width, x1 + 1, grid_size):
             if (x == x0 - line_width):
@@ -53,10 +52,7 @@ class GridMaker:
     def _create_graph_grid(grid_layer: mlx_image_t,
                            text_layer: mlx_image_t,
                            grid_config: GridConfig) -> None:
-        print(text_layer.contents.width, text_layer.contents.height)
         # randomize grid area
-        print(grid_config.y_pad)
-        print(grid_config.x_pad)
         start_y = grid_config.y_pad
         end_y =  grid_config.y_pad + grid_config.h
         start_x = grid_config.x_pad

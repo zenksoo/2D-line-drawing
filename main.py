@@ -33,6 +33,8 @@ END_POINT    : List[int]  = [0, 0]
 MOUSE_CLICKED: int        = 0
 LAYERS       : mlx_layers = mlx_layers()
 
+GRID_CONFIG  : GridConfig
+
 
 @mlx_loop_hook_func
 def handel_input(param: int) -> None:
@@ -57,8 +59,12 @@ def mouse_event(button, x, y, param) -> None:
 
     mlx.mlx_get_mouse_pos(mlx_ptr, ctypes.byref(x), ctypes.byref(y))
 
-    print(x.value, y.value)
     if (button == 0):
+        if (x.value < GRID_CONFIG.x_pad or
+            x.value > GRID_CONFIG.w + GRID_CONFIG.x_pad or
+            y.value < GRID_CONFIG.y_pad or
+            y.value > GRID_CONFIG.h + GRID_CONFIG.y_pad):
+            return
         global DRAW_STATE
         if DRAW_STATE != DrawState.ERASE:
             MlxCanvas._draw_circle(LAYERS.draw_layer, x.value, y.value, 5, 0x1E00FFFF)
@@ -105,9 +111,9 @@ def init_grid_window(grid_config: GridConfig) -> mlx_t:
 
 
 if __name__ == "__main__":
-    grid_config: GridConfig = GridConfig._from_file("./config.toml")
+    GRID_CONFIG: GridConfig = GridConfig._from_file("./config.toml")
 
-    mlx_ptr = init_grid_window(grid_config)
+    mlx_ptr = init_grid_window(GRID_CONFIG)
 
 
     mlx.mlx_loop_hook(mlx_ptr, handel_input, ctypes.cast(mlx_ptr, c_void_p))
