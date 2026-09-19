@@ -41,6 +41,3 @@ class LineDrawing:
         #     MlxCanvas._fill_pixel(layer, round(x), round(y), pixel_color)
         #     x += dx
         #     y += dy
-
-
-
