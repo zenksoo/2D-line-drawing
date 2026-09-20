@@ -1,12 +1,17 @@
 [grid]
 width      = 750
 height     = 450
+
 grid_size  = 25
 grid_color = 0x9F9F9FFF
+
 bg_color   = 0xffffffff
+
 text_color = 0x000000ff
 axis_color = 0x000000ff
 point_color= 0xff00ffff
 line_color = 0x0000ffff
+line_thickness = 50
+
 x_pad  = 50
 y_pad  = 80

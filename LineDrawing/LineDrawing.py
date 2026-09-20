@@ -30,14 +30,12 @@ class LineDrawing:
         for i in range(-half, half + 1):
             x = round(x0 + (vx * i))
             y = round(y0 + (vy * i))
+            if (thickness > 1):
+                r = 1
+            else:
+                r = 0
+
             for i in range(step):
-                MlxCanvas._draw_circle(layer, round(x), round(y), 1, pixel_color)
+                MlxCanvas._draw_circle(layer, round(x), round(y), r, pixel_color)
                 x += dx
                 y += dy
-
-        # x = x0
-        # y = y0
-        # for i in range(step):
-        #     MlxCanvas._fill_pixel(layer, round(x), round(y), pixel_color)
-        #     x += dx
-        #     y += dy

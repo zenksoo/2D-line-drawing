@@ -80,7 +80,7 @@ def mouse_event(button, x, y, param) -> None:
                 LineDrawing._draw_line(LAYERS.draw_layer,
                                                       START_POINT[0], START_POINT[1],
                                                       END_POINT[0], END_POINT[1],
-                                                      10, GRID_CONFIG.line_color)
+                                                      GRID_CONFIG.line_thickness, GRID_CONFIG.line_color)
                 DRAW_STATE = DrawState.START_POINT
 
     elif (button == 1):
